@@ -4,8 +4,8 @@ import reterminal.core as rt
 import time
 
 print("BUZZER ON")
-rt.buzzer = 1
+rt.buzzer = True
 time.sleep(1)
 
 print("BUZZER OFF")
-rt.buzzer = 0
+rt.buzzer = False

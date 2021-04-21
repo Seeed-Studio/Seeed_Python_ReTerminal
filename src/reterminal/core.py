@@ -15,28 +15,58 @@ class _Core:
     __BUTTON_DEVICE_NAME = "gpio_keys"
     __ACCELERATION_DEVICE_NAME = "ST LIS3LV02DL Accelerometer"
 
-    def __setattr__(self, name, value):
-        if name == "sta_led":
-            self.sta_led_green = value
-            self.sta_led_red = 0
+    @property
+    def sta_led(self):
+        return self.sta_led_green
 
-        elif name == "sta_led_green":
-            with open(_Core.__STA_LED_GREEN_BRIGHTNESS, "w") as f:
-                f.write("1" if value != 0 else "0")
+    @sta_led.setter
+    def sta_led(self, value):
+        self.sta_led_green = value
+        self.sta_led_red = False
 
-        elif name == "sta_led_red":
-            with open(_Core.__STA_LED_RED_BRIGHTNESS, "w") as f:
-                f.write("1" if value != 0 else "0")
+    @property
+    def sta_led_green(self):
+        with open(_Core.__STA_LED_GREEN_BRIGHTNESS, "r") as f:
+            brightness = f.readline().replace("\n", "")
+            return True if brightness != "0" else False
 
-        elif name == "usr_led":
-            with open(_Core.__USR_LED_GREEN_BRIGHTNESS, "w") as f:
-                f.write("1" if value != 0 else "0")
+    @sta_led_green.setter
+    def sta_led_green(self, value):
+        with open(_Core.__STA_LED_GREEN_BRIGHTNESS, "w") as f:
+            f.write("1" if value else "0")
 
-        elif name == "buzzer":
-            with open(_Core.__BUZZER_BRIGHTNESS, "w") as f:
-                f.write("1" if value != 0 else "0")
+    @property
+    def sta_led_red(self):
+        with open(_Core.__STA_LED_RED_BRIGHTNESS, "r") as f:
+            brightness = f.readline().replace("\n", "")
+            return True if brightness != "0" else False
 
-        super(_Core, self).__setattr__(name, value)
+    @sta_led_red.setter
+    def sta_led_red(self, value):
+        with open(_Core.__STA_LED_RED_BRIGHTNESS, "w") as f:
+            f.write("1" if value else "0")
+
+    @property
+    def usr_led(self):
+        with open(_Core.__USR_LED_GREEN_BRIGHTNESS, "r") as f:
+            brightness = f.readline().replace("\n", "")
+            return True if brightness != "0" else False
+
+    @usr_led.setter
+    def usr_led(self, value):
+        with open(_Core.__USR_LED_GREEN_BRIGHTNESS, "w") as f:
+            f.write("1" if value else "0")
+
+    @property
+    def buzzer(self):
+        with open(_Core.__BUZZER_BRIGHTNESS, "r") as f:
+            brightness = f.readline().replace("\n", "")
+            return True if brightness != "0" else False
+
+    @buzzer.setter
+    def buzzer(self, value):
+        with open(_Core.__BUZZER_BRIGHTNESS, "w") as f:
+            f.write("1" if value else "0")
 
     def __get_event_device_path(self, name):
 
