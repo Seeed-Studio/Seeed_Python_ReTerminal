@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import reterminal.core as rt
-import reterminal.button as rt_btn
+import seeed_python_reterminal.core as rt
+import seeed_python_reterminal.button as rt_btn
 
 
 device = rt.get_button_device()

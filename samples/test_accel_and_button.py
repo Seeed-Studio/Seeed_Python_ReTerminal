@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 import asyncio
-import reterminal.core as rt
-import reterminal.acceleration as rt_accel
-import reterminal.button as rt_btn
+import seeed_python_reterminal.core as rt
+import seeed_python_reterminal.acceleration as rt_accel
+import seeed_python_reterminal.button as rt_btn
 
 
 async def accel_coroutine(device):

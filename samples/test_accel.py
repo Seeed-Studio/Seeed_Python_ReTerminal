@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import reterminal.core as rt
-import reterminal.acceleration as rt_accel
+import seeed_python_reterminal.core as rt
+import seeed_python_reterminal.acceleration as rt_accel
 
 
 device = rt.get_acceleration_device()

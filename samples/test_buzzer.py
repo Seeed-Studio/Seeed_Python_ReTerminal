@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import reterminal.core as rt
+import seeed_python_reterminal.core as rt
 import time
 
 print("BUZZER ON")
