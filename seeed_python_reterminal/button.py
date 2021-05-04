@@ -16,10 +16,10 @@ class ButtonEvent:
             if event.code == 30:
                 self.name = ButtonName.F1
                 self.value = event.value
-            elif event.code == 32:
+            elif event.code == 31:
                 self.name = ButtonName.F2
                 self.value = event.value
-            elif event.code == 31:
+            elif event.code == 32:
                 self.name = ButtonName.F3
                 self.value = event.value
             elif event.code == 33:
