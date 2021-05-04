@@ -26,50 +26,45 @@ class _Core:
 
     @property
     def sta_led_green(self):
-        with open(_Core.__STA_LED_GREEN_BRIGHTNESS, "r") as f:
-            brightness = f.readline().replace("\n", "")
-            return True if brightness != "0" else False
+        return True if self.__read_1st_line_from_file(_Core.__STA_LED_GREEN_BRIGHTNESS) != "0" else False
 
     @sta_led_green.setter
     def sta_led_green(self, value):
-        with open(_Core.__STA_LED_GREEN_BRIGHTNESS, "w") as f:
-            f.write("1" if value else "0")
+        self.__write_to_file(_Core.__STA_LED_GREEN_BRIGHTNESS, "1" if value else "0")
 
     @property
     def sta_led_red(self):
-        with open(_Core.__STA_LED_RED_BRIGHTNESS, "r") as f:
-            brightness = f.readline().replace("\n", "")
-            return True if brightness != "0" else False
+        return True if self.__read_1st_line_from_file(_Core.__STA_LED_RED_BRIGHTNESS) != "0" else False
 
     @sta_led_red.setter
     def sta_led_red(self, value):
-        with open(_Core.__STA_LED_RED_BRIGHTNESS, "w") as f:
-            f.write("1" if value else "0")
+        self.__write_to_file(_Core.__STA_LED_RED_BRIGHTNESS, "1" if value else "0")
 
     @property
     def usr_led(self):
-        with open(_Core.__USR_LED_GREEN_BRIGHTNESS, "r") as f:
-            brightness = f.readline().replace("\n", "")
-            return True if brightness != "0" else False
+        return True if self.__read_1st_line_from_file(_Core.__USR_LED_GREEN_BRIGHTNESS) != "0" else False
 
     @usr_led.setter
     def usr_led(self, value):
-        with open(_Core.__USR_LED_GREEN_BRIGHTNESS, "w") as f:
-            f.write("1" if value else "0")
+        self.__write_to_file(_Core.__USR_LED_GREEN_BRIGHTNESS, "1" if value else "0")
 
     @property
     def buzzer(self):
-        with open(_Core.__BUZZER_BRIGHTNESS, "r") as f:
-            brightness = f.readline().replace("\n", "")
-            return True if brightness != "0" else False
+        return True if self.__read_1st_line_from_file(_Core.__BUZZER_BRIGHTNESS) != "0" else False
 
     @buzzer.setter
     def buzzer(self, value):
-        with open(_Core.__BUZZER_BRIGHTNESS, "w") as f:
-            f.write("1" if value else "0")
+        self.__write_to_file(_Core.__BUZZER_BRIGHTNESS, "1" if value else "0")
+
+    def __read_1st_line_from_file(self, file_name):
+        with open(file_name, "r") as f:
+            return f.readline().replace("\n", "")
+
+    def __write_to_file(self, file_name, value):
+        with open(file_name, "w") as f:
+            f.write(value)
 
     def __get_event_device_path(self, name):
-
         file_name_list = glob.glob(_Core.__EVENT_CLASS_PATH + "*")
 
         for file_name in file_name_list:
