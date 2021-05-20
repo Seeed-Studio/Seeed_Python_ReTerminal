@@ -165,9 +165,33 @@ rt.sta_led = False #Turn off green STA LED
 
 **Note:** If red STA LED is on during this time, the green STA LED will turn on and the red STA LED will turn off
 
-- **buzzer** : Turn on/off buzzer 
+- **buzzer** : Turn on/off buzzer
 
 ```python
 rt.buzzer = True #Turn on buzzer
 rt.buzzer = False #Turn off buzzer
+```
+
+- **get_button_device()**: Obtain information about the buttons including all the events supported by them
+
+```python
+device = rt.get_button_device()
+```
+
+- **ButtonEvent()**: Calls the ButtonEvent() and returns the EVENT
+
+```python
+buttonEvent = rt_btn.ButtonEvent(event)
+```
+
+- **get_acceleration_device()**: Obtain information about the accelerometer including all the events supported by it 
+
+```python
+device = rt.get_acceleration_device()
+```
+
+- **AccelerationEvent()**: Calls the AccelerationEvent() and returns the EVENT
+
+```python
+accelEvent = rt_accel.AccelerationEvent(event)
 ```
