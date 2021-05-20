@@ -1,9 +1,14 @@
 from setuptools import setup, find_packages
 
+with open('README.md') as f:
+    long_description = f.read()
+
 setup(
     name='seeed-python-reterminal',
-    version='0.1',
+    version='0.2',
     description='seeed-python-reterminal',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     license='MIT License',
     url='https://github.com/Seeed-Studio/Seeed_Python_ReTerminal',
     author='Takashi Matsuoka (matsujirushi)',
