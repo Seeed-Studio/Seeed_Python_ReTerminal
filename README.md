@@ -1,6 +1,6 @@
 # Python Library for reTerminal
 
-This is a Python library which enables you to use the onboard hardware on the [reTerminal](https://www.seeedstudio.com/ReTerminal-with-CM4-p-4904.html). Currently the **user LEDs, user buttons, buzzer and accelerometer** can be accessed using this Python library.
+This is a Python library which enables you to use the onboard hardware on the [reTerminal](https://www.seeedstudio.com/ReTerminal-with-CM4-p-4904.html). Currently the **accelerometer, user LEDs, user buttons and buzzer** can be accessed using this Python library.
 
 ## Installation
 
@@ -133,37 +133,37 @@ loop.run_forever()
 
 ## API Reference
 
-- **usr_led**: Turn on/off USR LED in green
+- **usr_led**: Turn on/off green USR LED
 
 ```python
-rt.usr_led = True #Turn on USR LED in green
-rt.usr_led = False #Turn off USR LED
+rt.usr_led = True #Turn on green USR LED
+rt.usr_led = False #Turn off green USR LED
 ```
 
-- **sta_led_red**: Turn on/off STA LED in red
+- **sta_led_red**: Turn on/off red STA LED
 
 ```python
-rt.sta_led_red = True #Turn on STA LED in red
-rt.sta_led_red = False #Turn off STA LED
+rt.sta_led_red = True #Turn on red STA LED
+rt.sta_led_red = False #Turn off red STA LED
 ```
 
-- **sta_led_green**: Turn on/off STA LED in green
+- **sta_led_green**: Turn on/off green STA LED
 
 ```python
-rt.sta_led_green = True #Turn on STA LED in green
-rt.sta_led_green = False #Turn off STA LED
+rt.sta_led_green = True #Turn on green STA LED
+rt.sta_led_green = False #Turn off green STA LED
 ```
 
-**Note:** If STA Red LED is on during this time, the green LED will turn on over the Red LED
+**Note:** If red STA LED is on during this time, the green STA LED will turn on over the red STA LED
 
-- **sta_led**: Turn on/off STA LED
+- **sta_led**: Turn on/off green STA LED
 
 ```python
-rt.sta_led = True #Turn on STA LED Red LED
-rt.sta_led = False #Turn off USR LED
+rt.sta_led = True #Turn on green STA LED
+rt.sta_led = False #Turn off green STA LED
 ```
 
-**Note:** If STA Red LED is on during this time, the green LED will turn on and the red LED will turn off
+**Note:** If red STA LED is on during this time, the green STA LED will turn on and the red STA LED will turn off
 
 - **buzzer** : Turn on/off buzzer 
 
