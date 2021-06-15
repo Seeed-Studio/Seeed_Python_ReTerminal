@@ -9,6 +9,7 @@ class _Core:
     __STA_LED_RED_BRIGHTNESS = "/sys/class/leds/usr_led1/brightness"
     __USR_LED_GREEN_BRIGHTNESS = "/sys/class/leds/usr_led0/brightness"
     __BUZZER_BRIGHTNESS = "/sys/class/leds/usr_buzzer/brightness"
+    __LIGHT_ILLUMINANCE = "/sys/bus/iio/devices/iio:device0/in_illuminance_input"
 
     __EVENT_CLASS_PATH = "/sys/class/input/event"
     __EVENT_DEVICE_PATH = "/dev/input/event"
@@ -55,6 +56,10 @@ class _Core:
     @buzzer.setter
     def buzzer(self, value):
         self.__write_to_file(_Core.__BUZZER_BRIGHTNESS, "1" if value else "0")
+
+    @property
+    def illuminance(self):
+        return int(self.__read_1st_line_from_file(_Core.__LIGHT_ILLUMINANCE))
 
     def __read_1st_line_from_file(self, file_name):
         with open(file_name, "r") as f:
