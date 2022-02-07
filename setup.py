@@ -5,7 +5,7 @@ with open('README.md') as f:
 
 setup(
     name='seeed-python-reterminal',
-    version='0.2',
+    version='0.3',
     description='seeed-python-reterminal',
     long_description=long_description,
     long_description_content_type='text/markdown',
