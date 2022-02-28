@@ -3,7 +3,7 @@ import glob
 import evdev
 import time
 from pathlib import Path
-
+import RPi.GPIO as GPIO
 
 class _Core:
 
@@ -23,6 +23,11 @@ class _Core:
 
     __GPIO_COMMON_DIR = "/sys/class/gpio/gpio"
     __FAN_GPIO = "23"
+
+    # because of the hardware limitation,we can only use one of rs232 or rs485 at a certain time. 
+    __RS232_OR_RS485 = "None" 
+
+    __232_485_SWITCH_GPIO = 25
 
     @property
     def sta_led(self):
@@ -94,6 +99,24 @@ class _Core:
                 self.__write_to_file(_Core.__GPIO_UNEXPORT, _Core.__FAN_GPIO)
         else:
             print('Fan input Param error please use True of False')
+
+    @property
+    def rs232_or_rs485(self):
+        return _Core.__RS232_OR_RS485 
+
+    @rs232_or_rs485.setter
+    def rs232_or_rs485(self, value):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        GPIO.setup(_Core.__232_485_SWITCH_GPIO, GPIO.OUT, initial=GPIO.LOW)
+        if value == "RS232":
+            GPIO.output(_Core.__232_485_SWITCH_GPIO, GPIO.LOW)
+            _Core.__RS232_OR_RS485 = "RS232" 
+        elif value == "RS485":
+            GPIO.output(_Core.__232_485_SWITCH_GPIO, GPIO.HIGH)
+            _Core.__RS232_OR_RS485 = "RS485" 
+        else:
+            print('rs232/rs485 select input param error.please use "RS232" or "RS485"')
 
     def __read_1st_line_from_file(self, file_name):
         with open(file_name, "r") as f:
