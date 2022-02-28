@@ -1,6 +1,8 @@
 import sys
 import glob
 import evdev
+import time
+from pathlib import Path
 
 
 class _Core:
@@ -15,6 +17,12 @@ class _Core:
     __EVENT_DEVICE_PATH = "/dev/input/event"
     __BUTTON_DEVICE_NAME = "gpio_keys"
     __ACCELERATION_DEVICE_NAME = "ST LIS3LV02DL Accelerometer"
+
+    __GPIO_EXPORT = "/sys/class/gpio/export"
+    __GPIO_UNEXPORT = "/sys/class/gpio/unexport"
+
+    __GPIO_COMMON_DIR = "/sys/class/gpio/gpio"
+    __FAN_GPIO = "23"
 
     @property
     def sta_led(self):
@@ -60,6 +68,32 @@ class _Core:
     @property
     def illuminance(self):
         return int(self.__read_1st_line_from_file(_Core.__LIGHT_ILLUMINANCE))
+
+    @property
+    def fan(self):
+        fan_gpio_dir = _Core.__GPIO_COMMON_DIR + _Core.__FAN_GPIO
+        if Path(fan_gpio_dir).exists() == False:
+            return False
+        if self.__read_1st_line_from_file(fan_gpio_dir+"/direction") == "in":
+            self.__write_to_file(fan_gpio_dir+"/direction", "out")
+        return True if self.__read_1st_line_from_file(fan_gpio_dir+"/value") != "0" else False
+
+    @fan.setter
+    def fan(self, value):
+        fan_gpio_dir = _Core.__GPIO_COMMON_DIR + _Core.__FAN_GPIO
+        if value == True:
+            if Path(fan_gpio_dir).exists() == False:
+                self.__write_to_file(_Core.__GPIO_EXPORT, _Core.__FAN_GPIO)
+                time.sleep(0.1)
+            self.__write_to_file(fan_gpio_dir+"/direction", "out")
+            self.__write_to_file(fan_gpio_dir+"/value", "1")
+        elif value == False:
+            if Path(fan_gpio_dir).exists() == True:
+                self.__write_to_file(fan_gpio_dir+"/direction", "out")
+                self.__write_to_file(fan_gpio_dir+"/value", "0")
+                self.__write_to_file(_Core.__GPIO_UNEXPORT, _Core.__FAN_GPIO)
+        else:
+            print('Fan input Param error please use True of False')
 
     def __read_1st_line_from_file(self, file_name):
         with open(file_name, "r") as f:
