@@ -29,6 +29,9 @@ class _Core:
 
     __232_485_SWITCH_GPIO = 25
 
+    __RS485_TX_RX_STAT = "None" 
+    __RS485_TX_RX_SWITCH_GPIO = 17
+
     @property
     def sta_led(self):
         return self.sta_led_green
@@ -117,6 +120,24 @@ class _Core:
             _Core.__RS232_OR_RS485 = "RS485" 
         else:
             print('rs232/rs485 select input param error.please use "RS232" or "RS485"')
+
+    @property
+    def rs485_tx_rx_stat(self):
+        return _Core.__RS485_TX_RX_STAT
+
+    @rs485_tx_rx_stat.setter
+    def rs485_tx_rx_stat(self, value):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        GPIO.setup(_Core.__RS485_TX_RX_SWITCH_GPIO, GPIO.OUT, initial=GPIO.LOW)
+        if value == "TX":
+            GPIO.output(_Core.__RS485_TX_RX_SWITCH_GPIO, GPIO.HIGH)
+            _Core.__RS485_TX_RX_STAT = "TX" 
+        elif value == "RX":
+            GPIO.output(_Core.__RS485_TX_RX_SWITCH_GPIO, GPIO.LOW)
+            _Core.__RS485_TX_RX_STAT = "RX" 
+        else:
+            print('rs485 stat switch input param error.please use "TX" or "RX"')
 
     def __read_1st_line_from_file(self, file_name):
         with open(file_name, "r") as f:
