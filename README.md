@@ -131,6 +131,173 @@ loop = asyncio.get_event_loop()
 loop.run_forever()
 ```
 
+**The Following Test Should Work With Reterminal Bridge**
+
+### fan Test
+
+```python
+import seeed_python_reterminal.core as rt
+import time
+
+print("FAN ON")
+rt.fan = True
+time.sleep(1)
+
+print("FAN OFF")
+rt.fan = False
+```
+
+### RS232 Test
+
+```python
+import sys
+import serial
+import time
+import seeed_python_reterminal.core as rt
+
+param1 = sys.argv[1]
+
+# enable the rs232 for test
+rt.rs232_or_rs485 = "RS232"
+
+# init the serial
+ser = serial.Serial(
+    port='/dev/ttyS0',
+    baudrate = 9600,
+    parity=serial.PARITY_NONE,
+    stopbits=serial.STOPBITS_ONE,
+    bytesize=serial.EIGHTBITS,
+    timeout=1
+)
+
+if param1 == "send":
+    counter=0
+    try:
+        print("rs232 starts now!\n")
+        ser.write("rs232 starts now!\n".encode())
+        while 1:
+                ser.write(("Write counter:{}\n".format(counter)).encode())
+                time.sleep(1)
+                counter += 1
+    except KeyboardInterrupt:
+        exit()
+elif param1 == "receive":
+    try:
+        print("Start receiving data now!\n")
+        while 1:
+            x=ser.readline()
+            if x != b'':
+                print(x)
+    except KeyboardInterrupt:
+        exit()
+else:
+    print('param input error,try again with send or receive')
+```
+**Note:**:When we use the test script of RS232/RS485/CAN.We need to pass a parameter to them.
+
+Take the RS232 for example:
+```
+python3 test_rs232.py send # test the send(TX) function of RS232
+python3 test_rs232.py receive # test the receive(RX) function of RS232
+```
+
+### RS485 Test
+
+```python
+import sys
+import serial
+import time
+import seeed_python_reterminal.core as rt
+
+param1 = sys.argv[1]
+
+# enable the rs485 for test
+rt.rs232_or_rs485 = "RS485"
+
+# init the serial
+ser = serial.Serial(
+    port='/dev/ttyS0',
+    baudrate = 9600,
+    parity=serial.PARITY_NONE,
+    stopbits=serial.STOPBITS_ONE,
+    bytesize=serial.EIGHTBITS,
+    timeout=1
+)
+
+if param1 == "send":
+    counter=0
+    # enable the rs485 for tx
+    rt.rs485_tx_rx_stat = "TX"
+    try:
+        print("rs485 starts now!\n")
+        ser.write("rs485 starts now!\n".encode())
+        while 1:
+                ser.write(("Write counter:{}\n".format(counter)).encode())
+                time.sleep(1)
+                counter += 1
+    except KeyboardInterrupt:
+        exit()
+elif param1 == "receive":
+    # enable the rs485 for rx
+    rt.rs485_tx_rx_stat = "RX"
+    try:
+        print("Start receiving data now!\n")
+        while 1:
+            x=ser.readline()
+            if x != b'':
+                print(x)
+    except KeyboardInterrupt:
+        exit()
+else:
+    print('param input error,try again with send or receive')
+```
+
+### CAN Test
+
+```python
+# NOTICE: please make sure you have pip3 install python-can
+#         before you use this test script
+# import the library
+import can
+import sys
+import time
+
+param1 = sys.argv[1]
+
+# create a bus instance
+# many other interfaces are supported as well (see documentation)
+bus = can.Bus(interface='socketcan',
+              channel='can0',
+              receive_own_messages=True)
+
+if param1 == "send":
+    # send a message
+    counter=0
+    print("can send starts now!\n")
+    try:
+        while True:
+            message = can.Message(arbitration_id=123, is_extended_id=True,
+                      data=[0x11, 0x22, counter])
+            bus.send(message, timeout=0.2)
+            time.sleep(1)
+            counter += 1
+    except KeyboardInterrupt:
+        exit()
+
+elif param1 == "receive":
+    # iterate over received messages
+    try:
+        for msg in bus:
+            print(f"{msg.arbitration_id:X}: {msg.data}")
+    except KeyboardInterrupt:
+        exit()
+else:
+    print('param input error,try again with send or receive')
+```
+**Note:** Please make sure your CAN interface is working before run this script.
+If not. You will get the error log with "Network is down". And you can 
+enable the can with "sudo ifconfig can0 up".
+
 ## API Reference
 
 - **usr_led**: Turn on/off green USR LED
@@ -194,4 +361,25 @@ device = rt.get_acceleration_device()
 
 ```python
 accelEvent = rt_accel.AccelerationEvent(event)
+```
+
+- **fan**: Turn on/off fan
+
+```python
+rt.fan = True # Turn on fan
+rt.fan = False # Turn off fan
+```
+
+- **rs232_or_rs485**: Open the RS232 or RS485
+
+```python
+rt.rs232_or_rs485 = "RS232" # open the RS232
+rt.rs232_or_rs485 = "RS485" # open the RS485
+```
+
+- **rs485_tx_rx_stat**: Switch the function between send(TX) and receive(Rx) of RS485
+
+```python
+rt.rs485_tx_rx_stat = "TX" # enable the send(TX) of RS485
+rt.rs485_tx_rx_stat = "RX" # enable the receive(RX) of RS485
 ```
