@@ -296,7 +296,7 @@ else:
 ```
 **Note:** Please make sure your CAN interface is working before run this script.
 If not. You will get the error log with "Network is down". And you can 
-enable the can with "sudo ifconfig can0 up".
+enable the can with "sudo ip link set can0 up type can bitrate 500000".
 
 ## API Reference
 

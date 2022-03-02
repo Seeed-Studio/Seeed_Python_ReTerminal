@@ -11,7 +11,8 @@ param1 = sys.argv[1]
 # many other interfaces are supported as well (see documentation)
 bus = can.Bus(interface='socketcan',
               channel='can0',
-              receive_own_messages=True)
+              receive_own_messages=True,
+              bitrate=500000)
 
 if param1 == "send":
     # send a message
