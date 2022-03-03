@@ -1,6 +1,6 @@
 # Python Library for reTerminal
 
-This is a Python library which enables you to use the onboard hardware on the [reTerminal](https://www.seeedstudio.com/ReTerminal-with-CM4-p-4904.html). Currently the **accelerometer, user LEDs, user buttons and buzzer** can be accessed using this Python library.
+This is a Python library which enables you to use the onboard hardware on the [reTerminal](https://www.seeedstudio.com/ReTerminal-with-CM4-p-4904.html) and [reTerminal Bridge](https://wiki.seeedstudio.com/reTerminalBridge/). Currently the **accelerometer, user LEDs, user buttons and buzzer** can be accessed using this Python library on reTerminal, and the **fan, RS232,  RS485, CAN** can be accessed by using this Python library on reTerminal Bridge.
 
 ## Installation
 
