@@ -9,20 +9,23 @@ class ButtonName(Enum):
     O = 4
 
 
+key_code = [30, 31, 32, 33]
+
+
 class ButtonEvent:
 
     def __init__(self, event):
         if event.type == evdev.ecodes.EV_KEY:
-            if event.code == 30:
+            if event.code == key_code[0]:
                 self.name = ButtonName.F1
                 self.value = event.value
-            elif event.code == 31:
+            elif event.code == key_code[1]:
                 self.name = ButtonName.F2
                 self.value = event.value
-            elif event.code == 32:
+            elif event.code == key_code[2]:
                 self.name = ButtonName.F3
                 self.value = event.value
-            elif event.code == 33:
+            elif event.code == key_code[3]:
                 self.name = ButtonName.O
                 self.value = event.value
             else:
