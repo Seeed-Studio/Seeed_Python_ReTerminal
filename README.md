@@ -131,6 +131,16 @@ loop = asyncio.get_event_loop()
 loop.run_forever()
 ```
 
+### Illuminance Sensor Test
+```python
+import time
+import seeed_python_reterminal.core as rt
+
+while True:
+    print(rt.illuminance)
+    time.sleep(0.2)
+```
+
 **The Following Test Should Work With Reterminal Bridge**
 
 ### fan Test
@@ -361,6 +371,11 @@ device = rt.get_acceleration_device()
 
 ```python
 accelEvent = rt_accel.AccelerationEvent(event)
+```
+
+- **Illuminance** :Obtain the current value from the illuminance sensor
+```python
+illuminance = rt.illuminance
 ```
 
 - **fan**: Turn on/off fan
