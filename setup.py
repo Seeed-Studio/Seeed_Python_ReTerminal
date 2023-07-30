@@ -17,7 +17,8 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     install_requires=[
-        "evdev"
+        "evdev",
+        "RPi.GPIO",
     ],
     packages=find_packages(
         exclude=[
