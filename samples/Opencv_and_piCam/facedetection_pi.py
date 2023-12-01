@@ -1,9 +1,10 @@
 import cv2
 from picamera2 import Picamera2
 
-# Load the pre-trained Haar Cascade classifier for face detection
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-
+# Load the pre-trained Haar Cascade classifier for face detection for Bookworm
+#face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+# Load the pre-trained Haar Cascade classifier for face detection for Bullseye
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 picam2 = Picamera2()
 picam2.preview_configuration.main.size = (1280, 720)
 picam2.preview_configuration.main.format = "RGB888"
