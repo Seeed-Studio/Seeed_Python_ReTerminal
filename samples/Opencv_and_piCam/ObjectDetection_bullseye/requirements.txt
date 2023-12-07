@@ -1,4 +1,0 @@
-argparse
-opencv-python~=4.5.3.56
-tflite-support==0.4.3
-protobuf>=3.18.0,<4
