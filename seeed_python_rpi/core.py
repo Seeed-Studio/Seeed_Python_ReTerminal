@@ -99,7 +99,7 @@ class _Core(board_class):
     @property
     def buzzer(self):
         if hasattr(_Core, 'BUZZER_BRIGHTNESS'):
-            return True if self.read_1st_line_from_file(_Core.BUZZER_BRIGHTNESS) != "0" else False
+            return True if self.__read_1st_line_from_file(_Core.BUZZER_BRIGHTNESS) != "0" else False
         elif hasattr(_Core, 'BUZZER_GPIO_CHIP'):
             chip = gpiod.Chip(_Core.BUZZER_GPIO_CHIP)
             line = chip.find_lines(_Core.BUZZER_GPIO_LINE)
